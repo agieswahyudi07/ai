@@ -1,0 +1,32 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    restart: always
+    expose:
+      - "11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.ai.rule=Host(`ai.${DOMAIN_NAME}`)
+      - traefik.http.routers.ai.entrypoints=web,websecure
+      - traefik.http.routers.ai.tls=true
+      - traefik.http.routers.ai.tls.certresolver=mytlschallenge
+    networks:
+      - traefik-network
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    command: >
+      sh -c "
+      ollama serve &
+      sleep 5 &&
+      ollama run gemma3:1b 
+      wait
+      "
+
+volumes:
+  ollama_data:
+
+networks:
+  traefik-network:
+    external: true
