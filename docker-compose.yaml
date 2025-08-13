@@ -16,8 +16,6 @@ services:
       - traefik-network
     environment:
       - OLLAMA_HOST=0.0.0.0
-    command: ollama serve
-      - ollama serve 
       
 volumes:
   ollama_data:
