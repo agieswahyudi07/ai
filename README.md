@@ -1,0 +1,2 @@
+# ai
+self-hosted ai
