@@ -16,14 +16,9 @@ services:
       - traefik-network
     environment:
       - OLLAMA_HOST=0.0.0.0
-    command: >
-      sh -c "
-      ollama serve &
-      sleep 5 &&
-      ollama run gemma3:1b 
-      wait
-      "
-
+    command: ollama serve
+      - ollama serve 
+      
 volumes:
   ollama_data:
 
